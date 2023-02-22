@@ -1,0 +1,47 @@
+<!--ekhn-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="origin-trial" content="TOKEN_GOES_HERE">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Memory Game with Eyetracking in JavaScript</title>
+
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/game.js" type="module" defer></script> <!--defer ➡ game.js will be loaded after the css is loaded from dom. (Scripts with the defer attribute will prevent the DOMContentLoaded event from firing until the script has loaded and finished evaluating.) -->
+</head>
+<body>
+
+    <img class="img-mouse-pointer" id="mouse-pointer-cursor" src=
+    "mouseicon.png"
+            width="15" height="20" />
+    <!--
+        This game has two large divisions. The game container includes .controls such as Start button and the Statistics. 
+        And the other one is the Board container with the .win and .board by default size 4x4 and it will programmatically generate the board so that the size can be configured quickly.-->
+    <div class="game">
+        <div class="controls">
+            <button class="startbtn">Start</button>
+            <button id="calibratebtn">Calibrate</button>
+            <button id="restart-button">Restart</button>
+            <div class="stats">
+                <div class="moves">0 moves</div> <!--each click will represent one move-->
+                <div class="timer">time: 0 sec</div>
+            </div>
+        </div>
+        <!--For each card, we need 3 div elements. 1. container for dimensions 2. front card, facing us, blank 3. back card, facing away from us, hiding the emoji-->
+        <div class="board-container">
+            <div class="board" data-dimension="2">
+                <div class="card" id="cardDiv">
+                    <div class="card-front"></div>
+                    <div class="card-back">🥔</div>
+                </div>
+            </div>
+            <div class="win">You won!</div>
+        </div>
+    </div>
+    
+</body>
+</html>
