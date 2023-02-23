@@ -1,8 +1,12 @@
 import 'regenerator-runtime/runtime';
 import EasySeeSo from 'seeso/easy-seeso';
 import { UserStatusOption } from 'seeso/dist/seeso';
+import { start } from 'repl';
 
-
+let gaze = {
+    x: 0,
+    y: 0,
+};
 
 //set calibration data from quickstart
 function parseCalibrationDataInQueryString() {
@@ -53,6 +57,7 @@ window.onload = async function () {
     }
     function onAttention() {
         console.log("test attention");
+        checkCards();
         /*const startButton = document.getElementById("startbtn");
         if (state.gameStarted== false) {
             let startbutton=document.getElementsByClassName("startbtn");
@@ -61,28 +66,47 @@ window.onload = async function () {
         }*/
 
     }
-
-    function onBlink(timestamp, isBlinkLeft, isBlinkRight, isBlink) {
-        if(isBlink==true){
-            console.log("on blink");
-        }
-       
-        /*if(isBlink==True){
-           
-            /*if(state.gameStarted==false){
-
-            }
-
-        }*/
-        //console.log("on blink");
-
-
     
+    let currentCard = -1;
+    function onBlink(timestamp, isBlinkLeft, isBlinkRight, isBlink) {
+         if(isBlink){
+            checkCards();
+         }
     }
+
+    function checkCards(){
+        let cs = document.getElementsByClassName("card");
+
+            if(cs){
+                for(let i = 0; i < cs.length; i++){
+                    let c = cs[i].getBoundingClientRect();
+                    if(c.x < gaze.x && c.x + 100 > gaze.x && c.y < gaze.y && c.y + 100 > gaze.y && i !== currentCard){
+                        console.log("Looking at card " + i);
+                        flipCard(cs[i]);
+                        currentCard = i;
+                    }
+                }
+            }
+           
+            checkBtn(document.getElementById("startbtnid"));
+            checkBtn(document.getElementById("calibratebtn"));
+            checkBtn(document.getElementById("restart-button"));
+    }
+
+    function checkBtn(btn){
+        if(btn){
+            const bounds = btn.getBoundingClientRect();
+            //console.log(btn.getBoundingClientRect());
+            if(bounds.x < gaze.x && bounds.x + bounds.width > gaze.x && bounds.y < gaze.y && bounds.y + bounds.height > gaze.y){
+                btn.click();
+            }
+        }
+    }
+
     function afterFailed() {
         console.log('sdk init fail!')
     }
-    seeso.setTrackingFps(1);
+    seeso.setTrackingFps(0);
     
     await seeso.init('dev_9gdab849x17cig3fqurrap28u20yavrov89sdwz4', afterInitialized, afterFailed, new UserStatusOption(true, true, false));
 
@@ -92,14 +116,25 @@ window.onload = async function () {
             px: eyeX,
             py: eyeY,
         };
-
-       
-
+        gaze = {
+            x: eyeX,
+            y: eyeY,
+        };
 
         //let px,py;
         //px=py=0;
 
         let cursor = document.getElementById("mouse-pointer-cursor");
+       /* const startbtn=document.getElementById("startbtnid");
+        const startbtnoffset=startbtn.offsetHeight;
+        const cursoroffset=cursor.offsetHeight;
+        if(startbtnoffset==cursoroffset){
+           setTimeout(()=>{
+            console.log("matched");
+           },3000)
+        }*/
+        
+        //console.log(startbtnoffset.offsetHeight);
 
         
 
@@ -121,12 +156,7 @@ window.onload = async function () {
 
 
 
-
-
-
-
     }
-
 
 
     const selectors = {
@@ -137,6 +167,8 @@ window.onload = async function () {
         start: document.querySelector('button'),
         win: document.querySelector('.win')
     }
+
+
 
     const state = {
         gameStarted: false,
@@ -217,7 +249,8 @@ window.onload = async function () {
             card.classList.remove('flipped')
         })
 
-        state.flippedCards = 0
+        state.flippedCards = 0;
+        currentCard = -1;
     }
 
     const flipCard = card => {
@@ -225,7 +258,8 @@ window.onload = async function () {
         state.totalFlips++
 
         if (!state.gameStarted) {
-            startGame()
+            return;
+            //startGame()
         }
 
         if (state.flippedCards <= 2) {
@@ -235,7 +269,7 @@ window.onload = async function () {
         if (state.flippedCards === 2) {
             const flippedCards = document.querySelectorAll('.flipped:not(.matched)')
 
-            if (flippedCards[0].innerText === flippedCards[1].innerText) {
+            if (flippedCards[0] && flippedCards[1] && flippedCards[0].innerText === flippedCards[1].innerText) {
                 flippedCards[0].classList.add('matched')
                 flippedCards[1].classList.add('matched')
             }
@@ -263,6 +297,7 @@ window.onload = async function () {
     }
 
     const attachEventListeners = () => {
+
         document.addEventListener('click', event => {
             const eventTarget = event.target
             const eventParent = eventTarget.parentElement
@@ -273,16 +308,25 @@ window.onload = async function () {
                 startGame()
             }
         })
+        
     }
+    /*const startbtnClick=()=>{
+        const startbtn=document.getElementsByClassName("startbtn");
+        startbtn.addEventListener("click",()=>{
+
+        })
+    }*/
 
 
-    function getOffset(el) {
+    /*function getOffset(el) {
         const rect = el.getBoundingClientRect();
         return {
             left: rect.left + window.scrollX,
             top: rect.top + window.scrollY
         };
-    }
+    }*/
+
+    
 
 
 
