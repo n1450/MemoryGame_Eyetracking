@@ -27,7 +27,7 @@ window.onload = async function () {
     button.addEventListener('click', () => {
         // Open calibration page and redirect back to localhost with calibration data 
         // http://localhost:8082/?calibrationData={%22vector%22:%22UhkpP4vlg74evSW6YbNJvVR1grpl+kc9ZXaPQYEUlkE=%22,%22vectorLength%22:32,%22isCameraOnTop%22:true,%22cameraX%22:750,%22monitorInch%22:%2213%22,%22faceDistance%22:40}
-        EasySeeSo.openCalibrationPage('dev_9gdab849x17cig3fqurrap28u20yavrov89sdwz4', 'hallobruto', window.location.href, 5);
+        EasySeeSo.openCalibrationPage('dev_wi1rlwnqw2i4zml13dbruyvzifhhmxcxs4jzx1tu', 'tenp919 ', window.location.href, 5);
     });
 
     var eyeX, eyeY;
