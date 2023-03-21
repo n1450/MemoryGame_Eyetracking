@@ -102,7 +102,7 @@ window.onload = async function () {
     }
     seeso.setTrackingFps(0);
 
-    await seeso.init('dev_9gdab849x17cig3fqurrap28u20yavrov89sdwz4', afterInitialized, afterFailed, new UserStatusOption(true, true, false));
+    await seeso.init('dev_wi1rlwnqw2i4zml13dbruyvzifhhmxcxs4jzx1tu', afterInitialized, afterFailed, new UserStatusOption(true, true, false));
 
     //moves the cursor
     function onEyeMove(eyeX, eyeY) {
