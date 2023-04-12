@@ -28,8 +28,8 @@ To use the game, follow these steps:
 2. Navigate to the directory where the repository was cloned to.
 3. Open the `game.js` file in your web browser.
 4. Initial SeeSo data are: <br>
-\- license key: dev_9gdab849x17cig3fqurrap28u20yavrov89sdwz4 <br>
-\- username: hallobruto
+\- license key: tbd <br>
+\- username: tbd
 5. If the license key is not working, you may get a new one on seeso.io
 6. On terminal install all node modules with `npm -i`
 7. Then `npm run serve` to start the game locally. 
